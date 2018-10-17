@@ -22,6 +22,18 @@ function calculateWinner(squares) {
   return null;
 }
 
+
+function CurrentStep(props) {
+  const isCurrentStep = props.isCurrentStep;
+
+  if (isCurrentStep) {
+    return <b>{props.text}</b>
+  } else {
+    return <span>{props.text}</span>
+  }
+
+}
+
 function Square(props) {
   return (
     <button className="square" onClick={props.onClick}>
@@ -123,9 +135,16 @@ class Game extends React.Component {
       const desc = move ?
         'Go to move #' + move :
         'Go to game start';
+
+      const isCurrentStep = this.state.stepNumber === move;
+
       return (
         <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
+          <button onClick={() => this.jumpTo(move)}>
+            <CurrentStep
+              isCurrentStep={isCurrentStep}
+              text={desc}/>
+          </button>
         </li>
       );
     });
